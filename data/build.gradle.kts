@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     kotlin("kapt")
 }
@@ -9,11 +9,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.xaarlox.data"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -52,7 +48,7 @@ dependencies {
 
     //Hilt - Dagger
     implementation(libs.dagger.hilt.android)
-    implementation(libs.hilt.android.compiler)
+    kapt(libs.hilt.android.compiler)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
