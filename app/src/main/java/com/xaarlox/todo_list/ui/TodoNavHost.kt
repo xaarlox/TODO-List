@@ -16,7 +16,7 @@ fun TodoNavHost(
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
         composable(route = TodoScreen.Loading.name) {
-            LoadingScreen()
+            LoadingScreen(onLoadingFinished = {})
         }
         composable(route = TodoScreen.Todos.name) {
             TodosScreen()
