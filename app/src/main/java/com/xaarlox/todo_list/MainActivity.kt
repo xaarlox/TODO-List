@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.xaarlox.todo_list.ui.TodoNavHost
 import com.xaarlox.todo_list.ui.theme.TODOListTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,10 +23,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             TODOListTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
-
+                    TodoNavHost()
                 }
             }
         }
