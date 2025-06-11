@@ -8,25 +8,30 @@ import androidx.navigation.compose.rememberNavController
 import com.xaarlox.todo_list.ui.screens.EditTodoScreen
 import com.xaarlox.todo_list.ui.screens.LoadingScreen
 import com.xaarlox.todo_list.ui.screens.TodosScreen
+import com.xaarlox.todo_list.ui.util.Routes
 
 @Composable
 fun TodoNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = TodoScreen.Loading.name
+    startDestination: String = Routes.LOADING_TODOS
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
-        composable(route = TodoScreen.Loading.name) {
-            LoadingScreen(onLoadingFinished = {})
+        composable(route = Routes.LOADING_TODOS) {
+            LoadingScreen(onLoadingFinished = {
+                navController.navigate(Routes.TODO_LIST) {
+                    popUpTo(Routes.LOADING_TODOS) { inclusive = true }
+                }
+            })
         }
-        composable(route = TodoScreen.Todos.name) {
-            TodosScreen()
+        composable(route = Routes.TODO_LIST) {
+            TodosScreen(
+                onNavigate = { event ->
+                    navController.navigate(event.route)
+                }
+            )
         }
-        composable(route = TodoScreen.Edit.name) {
+        composable(route = Routes.ADD_EDIT_TODO) {
             EditTodoScreen()
         }
     }
-}
-
-enum class TodoScreen {
-    Loading, Todos, Edit
 }
