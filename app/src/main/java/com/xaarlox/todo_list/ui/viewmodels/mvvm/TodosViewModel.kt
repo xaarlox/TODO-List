@@ -27,7 +27,7 @@ class TodosViewModel @Inject constructor(
 
     private var deletedTodo: Todo? = null
 
-    private val _userIp = MutableStateFlow("Loading IP...")
+    private val _userIp = MutableStateFlow("Loading...")
     val userIp: StateFlow<String> = _userIp
 
     init {
