@@ -56,6 +56,12 @@ object DataModule {
 
     @Provides
     @Singleton
+    fun provideNetworkApi(httpClient: HttpClient): NetworkApi {
+        return NetworkApi(httpClient)
+    }
+
+    @Provides
+    @Singleton
     fun provideNetworkRepository(httpClient: HttpClient): NetworkRepository {
         return NetworkRepositoryImpl(NetworkApi(httpClient))
     }
