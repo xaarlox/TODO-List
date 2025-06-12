@@ -2,9 +2,11 @@ package com.xaarlox.todo_list.ui
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.xaarlox.todo_list.ui.screens.EditTodoScreen
 import com.xaarlox.todo_list.ui.screens.LoadingScreen
 import com.xaarlox.todo_list.ui.screens.TodosScreen
@@ -30,8 +32,19 @@ fun TodoNavHost(
                 }
             )
         }
-        composable(route = Routes.ADD_EDIT_TODO) {
-            EditTodoScreen()
+        composable(route = Routes.ADD_EDIT_TODO + "?todoId={todoId}",
+            arguments = listOf(
+                navArgument("todoId") {
+                    type = NavType.IntType
+                    defaultValue = -1
+                }
+            )
+        ) {
+            EditTodoScreen(
+                onPopBackStack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
