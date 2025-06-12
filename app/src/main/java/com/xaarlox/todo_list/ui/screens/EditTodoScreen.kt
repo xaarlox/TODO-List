@@ -63,7 +63,7 @@ fun EditTodoScreen(
         },
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
     ) { paddingValues ->
         Column(
             modifier = Modifier
