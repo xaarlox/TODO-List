@@ -1,34 +1,30 @@
 package com.xaarlox.todo_list.ui.screens
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaarlox.todo_list.ui.components.EditTodoItem
 import com.xaarlox.todo_list.ui.util.UiEvent
 import com.xaarlox.todo_list.ui.viewmodels.mvi.EditTodoIntent
 import com.xaarlox.todo_list.ui.viewmodels.mvi.EditTodoViewModel
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun EditTodoScreen(
     onPopBackStack: () -> Unit, viewModel: EditTodoViewModel = hiltViewModel()
@@ -51,32 +47,34 @@ fun EditTodoScreen(
         }
     }
 
-    Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) },
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { viewModel.onIntent(EditTodoIntent.OnSaveTodoClick) },
+                shape = CircleShape,
+                containerColor = Color.Red,
+                contentColor = Color.White
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add, contentDescription = "Save"
+                )
+            }
+        },
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                viewModel.onIntent(EditTodoIntent.OnSaveTodoClick)
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Check, contentDescription = "Save"
-                )
-            }
-        }) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            TextField(value = state.title, onValueChange = {
-                viewModel.onIntent(EditTodoIntent.OnTitleChanged(it))
-            }, placeholder = {
-                Text(text = "Title")
-            }, modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            TextField(value = state.description, onValueChange = {
-                viewModel.onIntent(EditTodoIntent.OnDescriptionChanged(it))
-            }, placeholder = {
-                Text(text = "Description")
-            }, modifier = Modifier.fillMaxWidth(), singleLine = false, maxLines = 5
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            EditTodoItem(
+                state = state,
+                onTitleChange = { viewModel.onIntent(EditTodoIntent.OnTitleChanged(it)) },
+                onDescriptionChanged = { viewModel.onIntent(EditTodoIntent.OnDescriptionChanged(it)) },
+                onIsDoneChange = { viewModel.onIntent(EditTodoIntent.OnIsDoneChanged(it)) }
             )
         }
     }
