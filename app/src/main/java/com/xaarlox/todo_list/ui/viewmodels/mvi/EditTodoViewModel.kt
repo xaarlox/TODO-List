@@ -78,6 +78,7 @@ class EditTodoViewModel @Inject constructor(
                         isDone = state.value.isDone
                     )
                     todoRepository.insertTodo(todo)
+                    sendUiEffect(UiEvent.ShowSnackBar("Todo saved successfully"))
                     sendUiEffect(UiEvent.PopBackStack)
                 }
             }
