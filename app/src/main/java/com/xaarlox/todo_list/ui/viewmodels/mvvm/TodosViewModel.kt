@@ -78,6 +78,11 @@ class TodosViewModel @Inject constructor(
                             isDone = event.isDone
                         )
                     )
+                    if (event.isDone) {
+                        sendUiEvent(UiEvent.ShowSnackBar("Congrats! Todo completed!"))
+                    } else {
+                        sendUiEvent(UiEvent.ShowSnackBar("Oops... Todo marked as incomplete ;("))
+                    }
                 }
             }
         }
