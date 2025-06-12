@@ -14,7 +14,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xaarlox.todo_list.ui.components.SwipeToDeleteContainer
 import com.xaarlox.todo_list.ui.components.TodoItem
 import com.xaarlox.todo_list.ui.util.UiEvent
 import com.xaarlox.todo_list.ui.viewmodels.mvvm.TodosEvent
@@ -45,12 +45,9 @@ fun TodosScreen(
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.ShowSnackBar -> {
-                    val result = snackbarHostState.showSnackbar(
+                    snackbarHostState.showSnackbar(
                         message = event.message, actionLabel = event.action
                     )
-                    if (result == SnackbarResult.ActionPerformed) {
-                        viewModel.onEvent(TodosEvent.OnUndoDeleteClick)
-                    }
                 }
 
                 is UiEvent.Navigate -> onNavigate(event)
@@ -92,14 +89,19 @@ fun TodosScreen(
                     .fillMaxSize()
                     .padding(horizontal = 8.dp, vertical = 8.dp)
             ) {
-                items(todos.value) { todo ->
-                    TodoItem(
-                        todo = todo,
-                        onEvent = viewModel::onEvent,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp)
-                    )
+                items(todos.value, key = { it.id!! }) { todo ->
+                    SwipeToDeleteContainer(
+                        item = todo,
+                        onDelete = { viewModel.onEvent(TodosEvent.OnDeleteTodoClick(it)) }
+                    ) { item ->
+                        TodoItem(
+                            todo = item,
+                            onEvent = viewModel::onEvent,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp)
+                        )
+                    }
                 }
             }
         }

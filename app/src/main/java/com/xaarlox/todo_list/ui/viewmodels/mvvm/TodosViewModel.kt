@@ -50,24 +50,10 @@ class TodosViewModel @Inject constructor(
                 sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TODO))
             }
 
-            is TodosEvent.OnUndoDeleteClick -> {
-                deletedTodo?.let { todo ->
-                    viewModelScope.launch {
-                        todoRepository.insertTodo(todo)
-                    }
-                }
-            }
-
             is TodosEvent.OnDeleteTodoClick -> {
                 viewModelScope.launch {
                     deletedTodo = event.todo
                     todoRepository.deleteTodo(event.todo)
-                    sendUiEvent(
-                        UiEvent.ShowSnackBar(
-                            message = "Todo deleted",
-                            action = "Undo"
-                        )
-                    )
                 }
             }
 
