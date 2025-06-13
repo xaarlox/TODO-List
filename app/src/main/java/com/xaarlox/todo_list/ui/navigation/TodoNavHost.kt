@@ -1,4 +1,4 @@
-package com.xaarlox.todo_list.ui
+package com.xaarlox.todo_list.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -32,7 +32,7 @@ fun TodoNavHost(
                 }
             )
         }
-        composable(route = Routes.ADD_EDIT_TODO + "?todoId={todoId}",
+        composable(route = Routes.EDIT_TODO + "?todoId={todoId}",
             arguments = listOf(
                 navArgument("todoId") {
                     type = NavType.IntType

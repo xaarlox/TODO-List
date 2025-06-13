@@ -43,11 +43,11 @@ class TodosViewModel @Inject constructor(
     fun onEvent(event: TodosEvent) {
         when (event) {
             is TodosEvent.OnTodoClick -> {
-                sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TODO + "?todoId=${event.todo.id}"))
+                sendUiEvent(UiEvent.Navigate(Routes.EDIT_TODO + "?todoId=${event.todo.id}"))
             }
 
             is TodosEvent.OnAddTodoClick -> {
-                sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TODO))
+                sendUiEvent(UiEvent.Navigate(Routes.EDIT_TODO))
             }
 
             is TodosEvent.OnDeleteTodoClick -> {

@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.xaarlox.todo_list.ui.TodoNavHost
+import com.xaarlox.todo_list.ui.navigation.TodoNavHost
 import com.xaarlox.todo_list.ui.theme.TODOListTheme
 import dagger.hilt.android.AndroidEntryPoint
 
