@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kotlin.kapt)
 }
 
@@ -35,8 +34,4 @@ dependencies {
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
-
-    //Hilt - Dagger
-    implementation(libs.dagger.hilt.android)
-    kapt(libs.hilt.android.compiler)
 }

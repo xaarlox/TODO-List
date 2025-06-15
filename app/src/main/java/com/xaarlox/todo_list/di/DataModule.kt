@@ -1,4 +1,4 @@
-package com.xaarlox.data.di
+package com.xaarlox.todo_list.di
 
 import android.content.Context
 import androidx.room.Room

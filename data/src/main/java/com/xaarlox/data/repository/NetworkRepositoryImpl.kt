@@ -2,9 +2,8 @@ package com.xaarlox.data.repository
 
 import com.xaarlox.data.remote.NetworkApi
 import com.xaarlox.domain.repository.NetworkRepository
-import javax.inject.Inject
 
-class NetworkRepositoryImpl @Inject constructor(
+class NetworkRepositoryImpl(
     private val networkApi: NetworkApi
 ) : NetworkRepository {
     override suspend fun getUserIp(): String {

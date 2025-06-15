@@ -6,9 +6,8 @@ import com.xaarlox.domain.model.Todo
 import com.xaarlox.domain.repository.TodoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class TodoRepositoryImpl @Inject constructor(
+class TodoRepositoryImpl(
     private val dao: TodoDao
 ) : TodoRepository {
     override suspend fun insertTodo(todo: Todo) {

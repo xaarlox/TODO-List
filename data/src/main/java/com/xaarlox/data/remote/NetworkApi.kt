@@ -3,9 +3,8 @@ package com.xaarlox.data.remote
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
-import javax.inject.Inject
 
-class NetworkApi @Inject constructor(
+class NetworkApi(
     private val client: HttpClient
 ) {
     suspend fun getUserIp(): String {
