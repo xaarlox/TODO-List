@@ -3,7 +3,7 @@ package com.xaarlox.todo_list.di
 import android.content.Context
 import androidx.room.Room
 import com.xaarlox.data.local.TodoDatabase
-import com.xaarlox.data.remote.NetworkApi
+import com.xaarlox.data.remote.NetworkApiImpl
 import com.xaarlox.data.repository.NetworkRepositoryImpl
 import com.xaarlox.data.repository.TodoRepositoryImpl
 import com.xaarlox.domain.repository.NetworkRepository
@@ -56,13 +56,13 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideNetworkApi(httpClient: HttpClient): NetworkApi {
-        return NetworkApi(httpClient)
+    fun provideNetworkApi(httpClient: HttpClient): NetworkApiImpl {
+        return NetworkApiImpl(httpClient)
     }
 
     @Provides
     @Singleton
     fun provideNetworkRepository(httpClient: HttpClient): NetworkRepository {
-        return NetworkRepositoryImpl(NetworkApi(httpClient))
+        return NetworkRepositoryImpl(NetworkApiImpl(httpClient))
     }
 }

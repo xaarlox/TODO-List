@@ -25,7 +25,7 @@ class NetworkApiTest {
             )
         }
         val client = HttpClient(mockEngine)
-        val api = NetworkApi(client)
+        val api = NetworkApiImpl(client)
 
         val result = api.getUserIp()
         assertEquals("15.03.20.25", result)
@@ -43,7 +43,7 @@ class NetworkApiTest {
         val client = HttpClient(mockEngine) {
             expectSuccess = true
         }
-        val api = NetworkApi(client)
+        val api = NetworkApiImpl(client)
 
         assertThrows(ClientRequestException::class.java) {
             runBlocking { api.getUserIp() }
@@ -62,7 +62,7 @@ class NetworkApiTest {
         val client = HttpClient(mockEngine) {
             expectSuccess = true
         }
-        val api = NetworkApi(client)
+        val api = NetworkApiImpl(client)
 
         assertThrows(ServerResponseException::class.java) {
             runBlocking { api.getUserIp() }
@@ -79,7 +79,7 @@ class NetworkApiTest {
             )
         }
         val client = HttpClient(mockEngine)
-        val api = NetworkApi(client)
+        val api = NetworkApiImpl(client)
 
         val result = api.getUserIp()
         assertEquals("", result)
