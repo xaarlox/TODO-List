@@ -6,13 +6,14 @@ import com.xaarlox.domain.model.Todo
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
@@ -30,7 +31,7 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun insertTodo_inserts_correct_entity_to_DAO() = runTest {
+    fun insertTodo_insertsCorrectEntityToDao() = runBlocking {
         val todo = Todo(
             id = 1,
             title = "Start Challenge",
@@ -47,7 +48,7 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun deleteTodo_deletes_correct_entity_from_DAO() = runTest {
+    fun deleteTodo_deletesCorrectEntityFromDao() = runBlocking {
         val todo = Todo(
             id = 1,
             title = "Nothing beats a jet 2 holiday",
@@ -64,7 +65,7 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun getTodoById_returns_domain_model_if_exists() = runTest {
+    fun getTodoById_returnsDomainModelIfExists() = runBlocking {
         val todoId = 1
         val entity = TodoEntity(todoId, "Organize workspace", "Clean and declutter your desk", true)
         coEvery { todoDao.getTodoById(todoId) } returns entity
@@ -77,7 +78,7 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun getTodoById_returns_null_if_not_exist() = runTest {
+    fun getTodoById_returnsNullIfNotExist() = runBlocking {
         val todoId = 1
         coEvery { todoDao.getTodoById(todoId) } returns null
         val result = todoRepositoryImpl.getTodoById(todoId)
@@ -86,7 +87,7 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun getTodos_returns_mapped_domain_models() = runTest {
+    fun getTodos_returnsMappedDomainModels() = runBlocking {
         val todoEntities = listOf(
             TodoEntity(1, "Learn a phrase", "He who denied it, supplied it", true),
             TodoEntity(
@@ -96,7 +97,7 @@ class TodoRepositoryImplTest {
                 false
             )
         )
-        coEvery { todoDao.getTodos() } returns flowOf(todoEntities)
+        every { todoDao.getTodos() } returns flowOf(todoEntities)
         val todos = todoRepositoryImpl.getTodos().first()
         assertEquals(2, todos.size)
         assertEquals(Todo(1, "Learn a phrase", "He who denied it, supplied it", true), todos[0])

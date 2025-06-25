@@ -58,6 +58,7 @@ androidx-core-testing = { module = "androidx.arch.core:core-testing", version.re
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
 androidx-rules = { module = "androidx.test:rules", version.ref = "rules" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "roomTesting" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
