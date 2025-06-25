@@ -31,7 +31,7 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun insertTodo_insertsCorrectEntityToDao() = runBlocking {
+    fun `insertTodo inserts correct entity to DAO`() = runBlocking {
         val todo = Todo(
             id = 1,
             title = "Start Challenge",
@@ -48,7 +48,7 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun deleteTodo_deletesCorrectEntityFromDao() = runBlocking {
+    fun `deleteTodo deletes correct entity from DAO`() = runBlocking {
         val todo = Todo(
             id = 1,
             title = "Nothing beats a jet 2 holiday",
@@ -65,7 +65,7 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun getTodoById_returnsDomainModelIfExists() = runBlocking {
+    fun `getTodoById returns domain model if exists`() = runBlocking {
         val todoId = 1
         val entity = TodoEntity(todoId, "Organize workspace", "Clean and declutter your desk", true)
         coEvery { todoDao.getTodoById(todoId) } returns entity
@@ -78,7 +78,7 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun getTodoById_returnsNullIfNotExist() = runBlocking {
+    fun `getTodoById returns null if not exist`() = runBlocking {
         val todoId = 1
         coEvery { todoDao.getTodoById(todoId) } returns null
         val result = todoRepositoryImpl.getTodoById(todoId)
@@ -87,7 +87,7 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun getTodos_returnsMappedDomainModels() = runBlocking {
+    fun `getTodos returns mapped domain models`() = runBlocking {
         val todoEntities = listOf(
             TodoEntity(1, "Learn a phrase", "He who denied it, supplied it", true),
             TodoEntity(
