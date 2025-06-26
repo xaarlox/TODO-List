@@ -2,7 +2,7 @@ package com.xaarlox.todo_list.ui.viewmodels.mvvm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.xaarlox.data.remote.NetworkApiImpl
+import com.xaarlox.data.remote.NetworkApi
 import com.xaarlox.domain.model.Todo
 import com.xaarlox.domain.repository.TodoRepository
 import com.xaarlox.todo_list.ui.util.Routes
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TodosViewModel @Inject constructor(
     private val todoRepository: TodoRepository,
-    private val networkApi: NetworkApiImpl
+    private val networkApi: NetworkApi
 ) : ViewModel() {
     val todos = todoRepository.getTodos()
 
