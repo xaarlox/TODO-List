@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,6 +23,7 @@ import kotlinx.coroutines.delay
 fun <T> SwipeToDeleteContainer(
     item: T,
     onDelete: (T) -> Unit,
+    modifier: Modifier = Modifier,
     animationDuration: Int = 500,
     content: @Composable (T) -> Unit
 ) {
@@ -55,6 +57,7 @@ fun <T> SwipeToDeleteContainer(
     ) {
         SwipeToDismissBox(
             state = dismissState,
+            modifier = modifier,
             backgroundContent = {
                 DeleteBackground(dismissState = dismissState)
             },
