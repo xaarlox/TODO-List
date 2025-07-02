@@ -11,19 +11,19 @@
       <SelectionState runConfigName="domain">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="TodosScreenTest">
+      <SelectionState runConfigName="navigates_back_when_event_triggered()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="todosScreen_addButton_triggers_event()">
+      <SelectionState runConfigName="clicking_FAB_shows_snackbar_and_pops_backstack()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="todosScreen_shows_snackbar_on_event()">
+      <SelectionState runConfigName="clicking_FAB_shows_snackbar_when_todo_saved()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="todosScreen_editButton_triggers_navigation()">
+      <SelectionState runConfigName="clicking_FAB_shows_snackbar_and_navigate_back()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="todosScreen_editButton_for_second_todo_triggers_navigation()">
+      <SelectionState runConfigName="clicking_FAB_shows_snackbar_and_navigates_back()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
