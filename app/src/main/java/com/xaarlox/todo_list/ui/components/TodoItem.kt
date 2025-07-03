@@ -62,7 +62,7 @@ fun TodoItem(
                 onEvent(TodosEvent.OnTodoClick(todo))
             }
         ) {
-            Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit")
+            Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit ${todo.title}")
         }
     }
 }

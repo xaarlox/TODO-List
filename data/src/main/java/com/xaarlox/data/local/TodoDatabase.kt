@@ -5,9 +5,8 @@ import androidx.room.RoomDatabase
 import com.xaarlox.data.local.entity.TodoEntity
 
 @Database(
-    entities = [TodoEntity::class],
-    version = 1
+    entities = [TodoEntity::class], version = 1, exportSchema = false
 )
 abstract class TodoDatabase : RoomDatabase() {
-    abstract val dao: TodoDao
+    abstract fun todoDao(): TodoDao
 }
