@@ -1,12 +1,10 @@
-package com.xaarlox.todo_list.ui.viewmodels.mvvm
+package com.xaarlox.todo_list.ui.viewmodels.mvi
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.xaarlox.domain.model.Todo
 import com.xaarlox.domain.repository.TodoRepository
 import com.xaarlox.todo_list.ui.util.UiEvent
-import com.xaarlox.todo_list.ui.viewmodels.mvi.EditTodoIntent
-import com.xaarlox.todo_list.ui.viewmodels.mvi.EditTodoViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -46,25 +44,26 @@ class EditTodoViewModelTest {
     }
 
     @Test
-    fun `onTitleChanged updates state`() = runTest {
+    fun `should update title in state when OnTitleChanged intent is received`() = runTest {
         editTodoViewModel.onIntent(EditTodoIntent.OnTitleChanged("Test title"))
         assertEquals("Test title", editTodoViewModel.state.value.title)
     }
 
     @Test
-    fun `onDescriptionChanged updates state`() = runTest {
-        editTodoViewModel.onIntent(EditTodoIntent.OnDescriptionChanged("Test description"))
-        assertEquals("Test description", editTodoViewModel.state.value.description)
-    }
+    fun `should update description in state when OnDescriptionChanged intent is received`() =
+        runTest {
+            editTodoViewModel.onIntent(EditTodoIntent.OnDescriptionChanged("Test description"))
+            assertEquals("Test description", editTodoViewModel.state.value.description)
+        }
 
     @Test
-    fun `onIsDoneChanged updates state`() = runTest {
+    fun `should update isDone in state when OnIsDoneChanged intent is received`() = runTest {
         editTodoViewModel.onIntent(EditTodoIntent.OnIsDoneChanged(true))
         assertTrue(editTodoViewModel.state.value.isDone)
     }
 
     @Test
-    fun `onSaveTodoClick with blank title emits snackbar`() = runTest {
+    fun `should emit snackbar with error message when saving todo with blank title`() = runTest {
         editTodoViewModel.onIntent(EditTodoIntent.OnTitleChanged(""))
         editTodoViewModel.uiEffect.test {
             editTodoViewModel.onIntent(EditTodoIntent.OnSaveTodoClick)
@@ -76,36 +75,40 @@ class EditTodoViewModelTest {
     }
 
     @Test
-    fun `onSaveTodoClick with valid data saves todo and emits events`() = runTest {
-        coEvery { repository.insertTodo(any()) } returns Unit
+    fun `should save todo and emit success and navigation events when valid data is provided`() =
+        runTest {
+            coEvery { repository.insertTodo(any()) } returns Unit
 
-        editTodoViewModel.onIntent(EditTodoIntent.OnTitleChanged("Title"))
-        editTodoViewModel.onIntent(EditTodoIntent.OnDescriptionChanged("Description"))
-        editTodoViewModel.onIntent(EditTodoIntent.OnIsDoneChanged(true))
-        editTodoViewModel.onIntent(EditTodoIntent.OnSaveTodoClick)
+            editTodoViewModel.onIntent(EditTodoIntent.OnTitleChanged("Title"))
+            editTodoViewModel.onIntent(EditTodoIntent.OnDescriptionChanged("Description"))
+            editTodoViewModel.onIntent(EditTodoIntent.OnIsDoneChanged(true))
+            editTodoViewModel.onIntent(EditTodoIntent.OnSaveTodoClick)
 
-        testDispatcher.scheduler.advanceUntilIdle()
+            testDispatcher.scheduler.advanceUntilIdle()
 
-        coVerify {
-            repository.insertTodo(
-                Todo(
-                    id = null,
-                    title = "Title",
-                    description = "Description",
-                    isDone = true
+            coVerify {
+                repository.insertTodo(
+                    Todo(
+                        id = null,
+                        title = "Title",
+                        description = "Description",
+                        isDone = true
+                    )
                 )
-            )
-        }
+            }
 
-        editTodoViewModel.uiEffect.test {
-            assertEquals("Todo saved successfully", (awaitItem() as UiEvent.ShowSnackBar).message)
-            assertTrue(awaitItem() is UiEvent.PopBackStack)
-            cancelAndIgnoreRemainingEvents()
+            editTodoViewModel.uiEffect.test {
+                assertEquals(
+                    "Todo saved successfully",
+                    (awaitItem() as UiEvent.ShowSnackBar).message
+                )
+                assertTrue(awaitItem() is UiEvent.PopBackStack)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `init with todoId loads todo from repository`() = runTest {
+    fun `should load todo from repository when initialized with todoId`() = runTest {
         val todo = Todo(1, "Title", "Description", false)
         coEvery { repository.getTodoById(1) } returns todo
 

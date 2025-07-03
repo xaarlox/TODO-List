@@ -22,7 +22,7 @@ class NetworkRepositoryImplTest {
     }
 
     @Test
-    fun `getUserIp returns ip when NetworkApi returns ip`() = runTest {
+    fun `should return IP address when NetworkApi returns successfully`() = runTest {
         coEvery { mockNetworkApi.getUserIp() } returns "22.04.20.24"
 
         val result = networkRepository.getUserIp()
@@ -30,7 +30,7 @@ class NetworkRepositoryImplTest {
     }
 
     @Test
-    fun `getUserIp returns error message when NetworkApi throws exception`() = runTest {
+    fun `should return error message when NetworkApi throws exception`() = runTest {
         coEvery { mockNetworkApi.getUserIp() } throws Exception("Network error")
 
         val result = networkRepository.getUserIp()

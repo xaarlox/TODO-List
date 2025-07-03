@@ -28,8 +28,8 @@ class TodosScreenTest {
     private lateinit var viewModel: TodosViewModel
 
     private val testTodos = listOf(
-        Todo(id = 1, title = "Todo1", description = "Description1", isDone = false),
-        Todo(id = 2, title = "Todo2", description = "Description2", isDone = true)
+        Todo(id = 1, title = "Title1", description = "Description1", isDone = false),
+        Todo(id = 2, title = "Title2", description = "Description2", isDone = true)
     )
 
     private lateinit var uiEventFlow: MutableSharedFlow<UiEvent>
@@ -48,23 +48,23 @@ class TodosScreenTest {
     }
 
     @Test
-    fun todosScreen_displays_items_and_ip() {
+    fun setTodosScreenContent_shouldDisplayTodosAndIp() {
         setTodosScreenContent()
-        composeTestRule.onNodeWithText("Todo1").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Todo2").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Title1").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Title2").assertIsDisplayed()
         composeTestRule.onNodeWithText("Your IP: 15.03.20.24").assertIsDisplayed()
     }
 
     @Test
-    fun todosScreen_swipeToDelete_triggers_event() {
+    fun swipeLeftOnTodo_shouldTriggerDeleteEvent() {
         setTodosScreenContent()
-        composeTestRule.onNodeWithTag("swipe-Todo1").performTouchInput { swipeLeft() }
+        composeTestRule.onNodeWithTag("swipe-Title1").performTouchInput { swipeLeft() }
         composeTestRule.waitForIdle()
         verify { viewModel.onEvent(match { it is TodosEvent.OnDeleteTodoClick && it.todo.id == 1 }) }
     }
 
     @Test
-    fun todosScreen_shows_snackbar_on_event() {
+    fun emitShowSnackBarEvent_shouldDisplaySnackbar() {
         setTodosScreenContent()
         composeTestRule.runOnIdle {
             uiEventFlow.tryEmit(UiEvent.ShowSnackBar("Test Snackbar"))
@@ -73,18 +73,18 @@ class TodosScreenTest {
     }
 
     @Test
-    fun todosScreen_addButton_triggers_event() {
+    fun clickAddButton_shouldTriggerAddTodoEvent() {
         setTodosScreenContent()
         composeTestRule.onNodeWithContentDescription("Add").performClick()
         verify { viewModel.onEvent(TodosEvent.OnAddTodoClick) }
     }
 
     @Test
-    fun todosScreen_editButton_triggers_navigation() {
+    fun clickEditButton_shouldTriggerNavigationToEditScreen() {
         var navigatedEvent: UiEvent.Navigate? = null
         setTodosScreenContent(onNavigate = { event -> navigatedEvent = event })
 
-        composeTestRule.onNodeWithContentDescription("Edit Todo1").performClick()
+        composeTestRule.onNodeWithContentDescription("Edit Title1").performClick()
         verify { viewModel.onEvent(match { it is TodosEvent.OnTodoClick && it.todo.id == 1 }) }
 
         composeTestRule.runOnIdle {

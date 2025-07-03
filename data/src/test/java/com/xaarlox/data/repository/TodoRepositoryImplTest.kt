@@ -31,54 +31,55 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun `insertTodo inserts correct entity to DAO`() = runBlocking {
-        val todo = Todo(
-            id = 1,
-            title = "Start Challenge",
-            description = "Start GET TONED challenge (Chloe Ting)",
-            isDone = true
-        )
-        coEvery { todoDao.insertToDo(any()) } just runs
-        todoRepositoryImpl.insertTodo(todo)
-        coVerify {
-            todoDao.insertToDo(match {
-                it.id == todo.id && it.title == todo.title && it.description == todo.description && it.isDone == todo.isDone
-            })
+    fun `should insert mapped entity to DAO when insertTodo is called with domain model`() =
+        runBlocking {
+            val todo = Todo(
+                id = 1,
+                title = "Start Challenge",
+                description = "Start GET TONED challenge (Chloe Ting)",
+                isDone = true
+            )
+            coEvery { todoDao.insertToDo(any()) } just runs
+            todoRepositoryImpl.insertTodo(todo)
+            coVerify {
+                todoDao.insertToDo(match {
+                    it.id == todo.id && it.title == todo.title && it.description == todo.description && it.isDone == todo.isDone
+                })
+            }
         }
-    }
 
     @Test
-    fun `deleteTodo deletes correct entity from DAO`() = runBlocking {
-        val todo = Todo(
-            id = 1,
-            title = "Nothing beats a jet 2 holiday",
-            description = "And right now you can save 50 pounds per person",
-            isDone = true
-        )
-        coEvery { todoDao.deleteTodo(any()) } just runs
-        todoRepositoryImpl.deleteTodo(todo)
-        coVerify {
-            todoDao.deleteTodo(match {
-                it.id == todo.id && it.title == todo.title && it.description == todo.description && it.isDone == todo.isDone
-            })
+    fun `should delete mapped entity from DAO when deleteTodo is called with domain model`() =
+        runBlocking {
+            val todo = Todo(
+                id = 1,
+                title = "Nothing beats a jet 2 holiday",
+                description = "And right now you can save 50 pounds per person",
+                isDone = true
+            )
+            coEvery { todoDao.deleteTodo(any()) } just runs
+            todoRepositoryImpl.deleteTodo(todo)
+            coVerify {
+                todoDao.deleteTodo(match {
+                    it.id == todo.id && it.title == todo.title && it.description == todo.description && it.isDone == todo.isDone
+                })
+            }
         }
-    }
 
     @Test
-    fun `getTodoById returns domain model if exists`() = runBlocking {
+    fun `should return mapped domain model when entity exists in DAO for given id`() = runBlocking {
         val todoId = 1
         val entity = TodoEntity(todoId, "Organize workspace", "Clean and declutter your desk", true)
         coEvery { todoDao.getTodoById(todoId) } returns entity
         val result = todoRepositoryImpl.getTodoById(todoId)
         assertEquals(
-            Todo(todoId, "Organize workspace", "Clean and declutter your desk", true),
-            result
+            Todo(todoId, "Organize workspace", "Clean and declutter your desk", true), result
         )
         coVerify { todoDao.getTodoById(todoId) }
     }
 
     @Test
-    fun `getTodoById returns null if not exist`() = runBlocking {
+    fun `should return null when no entity is found in DAO for given id`() = runBlocking {
         val todoId = 1
         coEvery { todoDao.getTodoById(todoId) } returns null
         val result = todoRepositoryImpl.getTodoById(todoId)
@@ -87,10 +88,9 @@ class TodoRepositoryImplTest {
     }
 
     @Test
-    fun `getTodos returns mapped domain models`() = runBlocking {
+    fun `should return mapped list of domain models when DAO returns entities`() = runBlocking {
         val todoEntities = listOf(
-            TodoEntity(1, "Learn a phrase", "He who denied it, supplied it", true),
-            TodoEntity(
+            TodoEntity(1, "Learn a phrase", "He who denied it, supplied it", true), TodoEntity(
                 2,
                 "Paul Mescal movie marathon",
                 "Watch all the films starring Paul Mescal, starting with Aftersun",

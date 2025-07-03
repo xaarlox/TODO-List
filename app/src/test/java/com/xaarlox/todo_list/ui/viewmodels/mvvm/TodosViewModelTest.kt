@@ -52,7 +52,7 @@ class TodosViewModelTest {
     }
 
     @Test
-    fun `when ViewModel is initialized then todos emits initial value`() = runTest {
+    fun `should emit initial todos when ViewModel is initialized`() = runTest {
         val fakeFlow = MutableStateFlow(emptyList<Todo>())
         every { repository.getTodos() } returns fakeFlow
         createViewModel()
@@ -63,7 +63,7 @@ class TodosViewModelTest {
     }
 
     @Test
-    fun `when viewModel is initialized then user IP is fetched`() = runTest {
+    fun `should fetch user IP when ViewModel is initialized`() = runTest {
         coEvery { networkApi.getUserIp() } returns "14.02.20.25"
         createViewModel()
         testDispatcher.scheduler.advanceUntilIdle()
@@ -73,7 +73,7 @@ class TodosViewModelTest {
     }
 
     @Test
-    fun `when fetching user IP fails then error is set`() = runTest {
+    fun `should set error message when fetching user IP fails`() = runTest {
         coEvery { networkApi.getUserIp() } throws RuntimeException("Network error")
         createViewModel()
         testDispatcher.scheduler.runCurrent()
@@ -83,7 +83,7 @@ class TodosViewModelTest {
     }
 
     @Test
-    fun `when OnTodoClick event is sent then Navigate UiEvent is emitted`() = runTest {
+    fun `should emit Navigate UiEvent with todoId when OnTodoClick is triggered`() = runTest {
         createViewModel()
         expectSingleUiEvent(UiEvent.Navigate(Routes.EDIT_TODO + "?todoId=${testTodo.id}")) {
             viewModel.onEvent(TodosEvent.OnTodoClick(testTodo))
@@ -91,7 +91,7 @@ class TodosViewModelTest {
     }
 
     @Test
-    fun `when OnAddTodoClick event is sent then Navigate UiEvent is emitted`() = runTest {
+    fun `should emit Navigate UiEvent without ID when OnAddTodoClick is triggered`() = runTest {
         createViewModel()
         expectSingleUiEvent(UiEvent.Navigate(Routes.EDIT_TODO)) {
             viewModel.onEvent(TodosEvent.OnAddTodoClick)
@@ -99,7 +99,7 @@ class TodosViewModelTest {
     }
 
     @Test
-    fun `when OnDeleteTodoClick event is sent then deleteTodo is called`() = runTest {
+    fun `should call deleteTodo on repository when OnDeleteTodoClick is triggered`() = runTest {
         createViewModel()
         coEvery { repository.deleteTodo(any()) } returns Unit
         viewModel.onEvent(TodosEvent.OnDeleteTodoClick(testTodo))
@@ -108,7 +108,7 @@ class TodosViewModelTest {
     }
 
     @Test
-    fun `when OnDoneChange is true then insertTodo is called and congrats snackbar is shown`() =
+    fun `should insert completed todo and show congrats snackbar when OnDoneChange is true`() =
         runTest {
             createViewModel()
             coEvery { repository.insertTodo(any()) } returns Unit
@@ -120,7 +120,7 @@ class TodosViewModelTest {
         }
 
     @Test
-    fun `when OnDoneChange is false then insertTodo is called and incomplete snackbar is shown`() =
+    fun `should insert incomplete todo and show oops snackbar when OnDoneChange is false`() =
         runTest {
             createViewModel()
             coEvery { repository.insertTodo(any()) } returns Unit

@@ -31,12 +31,12 @@ class TodoDaoTest {
     }
 
     @After
-    fun teardown() {
+    fun tearDown() {
         database.close()
     }
 
     @Test
-    fun insertTodo_returnsTodoById() = runTest {
+    fun insertTodo_shouldReturnInsertedTodoById() = runTest {
         val id = 1
         val todoItem = TodoEntity(
             id = id,
@@ -50,7 +50,7 @@ class TodoDaoTest {
     }
 
     @Test
-    fun deleteTodo_removesTodoFromDatabase() = runTest {
+    fun deleteTodo_shouldRemoveTodoFromDatabase() = runTest {
         val id = 2
         val todoItem = TodoEntity(
             id = id,
@@ -65,7 +65,7 @@ class TodoDaoTest {
     }
 
     @Test
-    fun getTodos_returnsAllInsertedTodos() = runTest {
+    fun getTodos_shouldReturnAllInsertedTodos() = runTest {
         val todoItem1 = TodoEntity(
             id = 3,
             title = "Go for a walk",

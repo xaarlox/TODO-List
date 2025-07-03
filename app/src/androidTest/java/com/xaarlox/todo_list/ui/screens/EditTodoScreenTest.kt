@@ -53,7 +53,7 @@ class EditTodoScreenTest {
     }
 
     @Test
-    fun screen_shows_all_fields() {
+    fun setEditTodoScreenContent_shouldDisplayAllFields() {
         composeTestRule.onNodeWithText("Test title").assertExists()
         composeTestRule.onNodeWithText("Test description").assertExists()
         composeTestRule.onNodeWithText("Mark as complete").assertExists()
@@ -61,25 +61,25 @@ class EditTodoScreenTest {
     }
 
     @Test
-    fun typing_title_triggers_intent() {
+    fun typingTitle_shouldTriggerOnTitleChangedIntent() {
         composeTestRule.onNodeWithText("Test title").performTextInput(" new")
         verify { viewModel.onIntent(match { it is EditTodoIntent.OnTitleChanged }) }
     }
 
     @Test
-    fun typing_description_triggers_intent() {
+    fun typingDescription_shouldTriggersOnDescriptionChangedIntent() {
         composeTestRule.onNodeWithText("Test description").performTextInput(" more")
         verify { viewModel.onIntent(match { it is EditTodoIntent.OnDescriptionChanged }) }
     }
 
     @Test
-    fun clicking_checkbox_triggers_intent() {
+    fun clickingCheckbox_shouldTriggerOnIsDoneChangedIntent() {
         composeTestRule.onNode(isToggleable()).performClick()
         verify { viewModel.onIntent(match { it is EditTodoIntent.OnIsDoneChanged }) }
     }
 
     @Test
-    fun clicking_FAB_shows_snackbar_when_todo_saved() {
+    fun clickingSaveFab_shouldTriggerOnSaveIntentAndShowSnackbar() {
         composeTestRule.onNodeWithContentDescription("Save").performClick()
         verify { viewModel.onIntent(EditTodoIntent.OnSaveTodoClick) }
         runBlocking {
@@ -89,7 +89,7 @@ class EditTodoScreenTest {
     }
 
     @Test
-    fun navigates_back_when_event_triggered() {
+    fun emitPopBackStackEvent_shouldTriggerNavigationBack() {
         runBlocking {
             effectFlow.emit(UiEvent.PopBackStack)
         }
