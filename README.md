@@ -35,6 +35,21 @@ TODOList is a clean, fast Android app for creating and managing tasks. It focuse
 - **Instrumented UI tests**: Compose screens and UI flows.
 
 
+### Screenshots
+Below you can see the main interface and functionality of the TODOList app:
+
+| Loading | Todos List |
+|---------| -----------|
+| <img src="https://github.com/user-attachments/assets/4d5d0eac-c54c-4b60-9e5a-99fbc8433338" width="250"/> | <img src="https://github.com/user-attachments/assets/969c6d99-0a66-4875-a50c-e8f9e7c5981d" width="250"/> | 
+| *Animated loading screen*. | *Task list with actions*. |
+
+
+| Todo Details | Swipe to Delete |
+|--------------|-----------------|
+| <img src="https://github.com/user-attachments/assets/610370a2-75f8-40d2-9ad3-ae176f7d612e" width="250"/> | <img src="https://github.com/user-attachments/assets/9fc249ec-443c-4405-b289-2e919f16bca4" width="250"/> |
+| *Task details view*. | *Swipe-to-delete function*. |
+
+
 ### Installation
 1. Clone the repository.
 2. Open in Android Studio.
